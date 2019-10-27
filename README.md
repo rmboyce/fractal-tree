@@ -1,4 +1,4 @@
-# fractal-tree
+# Fractal Tree Visualizer
 
 Demo: https://www.openprocessing.org/sketch/750989
 
