@@ -23,7 +23,7 @@ function setup() {
   strokeWeight(2);
   stroke(10);
   
-	angle = radians(90);
+  angle = radians(90);
 	
   hs1 = new HScrollbar(500, 75, 200, 10, 3, false);
   hs2 = new HScrollbar(500, 175, 200, 10, 3, false);
