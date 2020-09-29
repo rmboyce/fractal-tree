@@ -12,12 +12,12 @@ class HScrollbar {
     this.sposMax = this.xpos + this.swidth - this.sheight;
     this.loose = l;
     this.normalPos = (this.spos - this.sposMin) / (this.sposMax - this.sposMin);
-		this.over = false;
-		this.locked = false;
-		this.looping = loop;
-  	this.rollingUp = false;
-		this.rollingDown = false;
-		this.rollingSpeed = 0;
+    this.over = false;
+    this.locked = false;
+    this.looping = loop;
+    this.rollingUp = false;
+    this.rollingDown = false;
+    this.rollingSpeed = 0;
   }
 
   update() {
