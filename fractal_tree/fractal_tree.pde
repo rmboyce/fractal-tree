@@ -1,85 +1,84 @@
 //Angle
-var angle;
+float angle = radians(90);
 
 //Branch
-var numBranches = 0;//3;
-var reduct = 0;//0.5;
-var min_len = 4.5;
+int numBranches = 0;//3;
+float reduct = 0;//0.5;
+float min_len = 4.5;
 
 //Test number of operations
-var numTreeLoop = 150;
-var operations = 0;
-var max_op = 50000;
-var tmax_op = 200000;
+int numTreeLoop = 300;
+int operations = 0;
+int max_op = 50000;
+int tmax_op = 200000;
 
 //Input
-var hs1;
-var hs2;
-var hs3;
-var hs4;
+HScrollbar hs1;
+HScrollbar hs2;
+HScrollbar hs3;
+HScrollbar hs4;
 
-function setup() {
-  createCanvas(750, 450);
+void setup() {
+  size(1500, 900);
   strokeWeight(2);
   stroke(10);
   
-  angle = radians(90);
-	
-  hs1 = new HScrollbar(500, 75, 200, 10, 3, false);
-  hs2 = new HScrollbar(500, 175, 200, 10, 3, false);
-  hs3 = new HScrollbar(500, 275, 200, 10, 3, false);
-  hs4 = new HScrollbar(500, 375, 200, 10, 3, true);
+  hs1 = new HScrollbar(1000, 150, 400, 20, 3, false);
+  hs2 = new HScrollbar(1000, 350, 400, 20, 3, false);
+  hs2.setNormalPos(0.4f);
+  hs3 = new HScrollbar(1000, 550, 400, 20, 3, false);
+  hs4 = new HScrollbar(1000, 750, 400, 20, 3, true);
   hs4.rollingUp = true;
-  hs4.rollingSpeed = 0.5;
+  hs4.rollingSpeed = 0.7f;
 }
 
 
-function draw() {
+void draw() {
   background(0, 0, 0);
   
   //Input
   hs1.update();
   hs1.display();
   fill(255, 255, 255);
+  textSize(30);
+  text("Number of branches", 1000, 90);
   textSize(20);
-  text("Number of branches", 500, 45);
-  textSize(15);
-  text("2", 500, 62.5);
-  text("5", 692.5, 62.5);
-  text((int) (2.5 + hs1.normalPos * 3), 500, 95);
+  text("2", 1000, 125);
+  text("5", 1385, 125);
+  text((int) (2.5 + hs1.normalPos * 3), 1000, 190);
   numBranches = (int) (2.5 + hs1.normalPos * 3);
   
   hs2.update();
   hs2.display();
   fill(255, 255, 255);
+  textSize(30);
+  text("Fractional length of new branches", 1000, 290);
   textSize(20);
-  text("Fractional branch length", 500, 145);
-  textSize(15);
-  text("0", 500, 162.5);
-  text("1", 692.5, 162.5);
-  text(round(hs2.normalPos, 3), 500, 195);
+  text("0", 1000, 325);
+  text("1", 1385, 325);
+  text(hs2.normalPos, 1000, 390);
   reduct = hs2.normalPos;
   
   hs3.update();
   hs3.display();
   fill(255, 255, 255);
+  textSize(30);
+  text("Minimum branch length", 1000, 490);
   textSize(20);
-  text("Minimum branch length", 500, 245);
-  textSize(15);
-  text("0", 500, 262.5);
-  text("10", 692.5, 262.5);
-  text(round(hs3.normalPos * 10, 3), 500, 295);
+  text("0", 1000, 525);
+  text("10", 1385, 525);
+  text(hs3.normalPos * 10, 1000, 590);
   min_len = hs3.normalPos * 10;
   
   hs4.update();
   hs4.display();
   fill(255, 255, 255);
+  textSize(30);
+  text("Branch angle", 1000, 690);
   textSize(20);
-  text("Branch angle", 500, 345);
-  textSize(15);
-  text("0", 500, 362.5);
-  text(round(TWO_PI, 3), 692.5, 362.5);
-  text(round(hs4.normalPos * TWO_PI, 3), 500, 395);
+  text("0", 1000, 725);
+  text(TWO_PI, 1385, 725);
+  text(hs4.normalPos * TWO_PI, 1000, 790);
   angle = hs4.normalPos * TWO_PI;
   
   //Drawing the tree
@@ -106,49 +105,49 @@ function draw() {
   operations = 0;
 }
 
-function branchEven(len) {
+void branchEven(float len) {
   line(0, 0, 0, len);
   translate(0, len);
   if (min_len != 0 && len > min_len && operations < max_op) {
     rotate(angle/2);
-    for (let i = 0; i < numBranches/2; i++) {
-      push();
+    for (int i = 0; i < numBranches/2; i++) {
+      pushMatrix();
       rotate(angle * i);
       branchEven(len * reduct);
-      pop();
+      popMatrix();
     }
     rotate(-angle);
-    for (let i = 0; i < numBranches/2; i++) {
-      push();
+    for (int i = 0; i < numBranches/2; i++) {
+      pushMatrix();
       rotate(-angle * i);
       branchEven(len * reduct);
-      pop();
+      popMatrix();
     }
   }
 }
 
-function branchOdd(len) {
+void branchOdd(float len) {
   line(0, 0, 0, len);
   translate(0, len);
   if (min_len != 0 && len > min_len && operations < max_op) {
-    for (let i = 0; i <= numBranches/2; i++) {
-      push();
+    for (int i = 0; i <= numBranches/2; i++) {
+      pushMatrix();
       rotate(angle * i);
       branchOdd(len * reduct);
-      pop();
-      push();
+      popMatrix();
+      pushMatrix();
       rotate(-angle * i);
       branchOdd(len * reduct);
-      pop();
+      popMatrix();
     }
   }
 }
 
 //Count number of operations drawing a tree would take
-function operationsCount(len) {
+void operationsCount(float len) {
   operations++;
   if (len > min_len && operations < tmax_op) {
-    for (let i = 0; i <= numBranches/2; i++) {
+    for (int i = 0; i <= numBranches/2; i++) {
       operationsCount(len * reduct);
       operationsCount(len * reduct);
     }
