@@ -51,7 +51,7 @@ function draw() {
   hs2.display();
   fill(255, 255, 255);
   textSize(20);
-  text("Fractional length of new branches", 500, 145);
+  text("Fractional branch length", 500, 145);
   textSize(15);
   text("0", 500, 162.5);
   text("1", 692.5, 162.5);
