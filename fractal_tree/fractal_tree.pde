@@ -32,54 +32,40 @@ void setup() {
   hs4.rollingSpeed = 0.7f;
 }
 
+void TextHScrollbar(HScrollbar hs, String s, String lowVal, String highVal, 
+                    float per, boolean isPerInt) {
+  hs.update();
+  hs.display();
+  fill(255, 255, 255);
+  textSize(30);
+  text(s, hs.xpos, hs.ypos - 50);
+  textSize(20);
+  text(lowVal, hs.xpos, hs.ypos - 15);
+  text(highVal, hs.xpos + hs.swidth - 15, hs.ypos - 15);
+  if (isPerInt) {
+    text((int) per, hs.xpos, hs.ypos + 50);
+  }
+  else {
+    text(per, hs.xpos, hs.ypos + 50);
+  }
+}
 
 void draw() {
   background(0, 0, 0);
   
   //Input
-  hs1.update();
-  hs1.display();
-  fill(255, 255, 255);
-  textSize(30);
-  text("Number of branches", 1000, 90);
-  textSize(20);
-  text("2", 1000, 125);
-  text("5", 1385, 125);
-  text((int) (2.5 + hs1.normalPos * 3), 1000, 190);
   numBranches = (int) (2.5 + hs1.normalPos * 3);
+  TextHScrollbar(hs1, "Number of branches", "2", "5", numBranches, true);
   
-  hs2.update();
-  hs2.display();
-  fill(255, 255, 255);
-  textSize(30);
-  text("Fractional length of new branches", 1000, 290);
-  textSize(20);
-  text("0", 1000, 325);
-  text("1", 1385, 325);
-  text(hs2.normalPos, 1000, 390);
   reduct = hs2.normalPos;
-  
-  hs3.update();
-  hs3.display();
-  fill(255, 255, 255);
-  textSize(30);
-  text("Minimum branch length", 1000, 490);
-  textSize(20);
-  text("0", 1000, 525);
-  text("10", 1385, 525);
-  text(hs3.normalPos * 10, 1000, 590);
+  TextHScrollbar(hs2, "Fractional length of new branches", "0", "1", 
+                 reduct, false);
+                 
   min_len = hs3.normalPos * 10;
+  TextHScrollbar(hs3, "Minimum branch length", "0", "10", min_len, false);
   
-  hs4.update();
-  hs4.display();
-  fill(255, 255, 255);
-  textSize(30);
-  text("Branch angle", 1000, 690);
-  textSize(20);
-  text("0", 1000, 725);
-  text(TWO_PI, 1385, 725);
-  text(hs4.normalPos * TWO_PI, 1000, 790);
   angle = hs4.normalPos * TWO_PI;
+  TextHScrollbar(hs4, "Branch angle", "0", "6.283", angle, false);
   
   //Drawing the tree
   stroke(255, 255, 255);

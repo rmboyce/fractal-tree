@@ -33,54 +33,34 @@ function setup() {
   hs4.rollingSpeed = 0.5;
 }
 
+//hs: HScrollbar, s: title above, lowVal: low value of the scrollbar, highVal: high value of the scrollbar, per: percentage text below
+function TextHScrollbar(hs, s, lowVal, highVal, per) {
+  hs.update();
+  hs.display();
+  fill(255, 255, 255);
+  textSize(20);
+  text(s, hs.xpos, hs.ypos - 25);
+  textSize(15);
+  text(lowVal, hs.xpos, hs.ypos - 7.5);
+  text(highVal, hs.xpos + hs.swidth - 7.5, hs.ypos - 7.5);
+  text(per, hs.xpos, hs.ypos + 25);
+}
 
 function draw() {
   background(0, 0, 0);
   
   //Input
-  hs1.update();
-  hs1.display();
-  fill(255, 255, 255);
-  textSize(20);
-  text("Number of branches", 500, 45);
-  textSize(15);
-  text("2", 500, 62.5);
-  text("5", 692.5, 62.5);
-  text((int) (2.5 + hs1.normalPos * 3), 500, 95);
   numBranches = (int) (2.5 + hs1.normalPos * 3);
+  TextHScrollbar(hs1, "Number of branches", 2, 5, numBranches);
   
-  hs2.update();
-  hs2.display();
-  fill(255, 255, 255);
-  textSize(20);
-  text("Fractional branch length", 500, 145);
-  textSize(15);
-  text("0", 500, 162.5);
-  text("1", 692.5, 162.5);
-  text(round(hs2.normalPos, 3), 500, 195);
   reduct = hs2.normalPos;
+  TextHScrollbar(hs2, "Fractional branch length", 0, 1, round(reduct, 3));
   
-  hs3.update();
-  hs3.display();
-  fill(255, 255, 255);
-  textSize(20);
-  text("Minimum branch length", 500, 245);
-  textSize(15);
-  text("0", 500, 262.5);
-  text("10", 692.5, 262.5);
-  text(round(hs3.normalPos * 10, 3), 500, 295);
   min_len = hs3.normalPos * 10;
+  TextHScrollbar(hs3, "Minimum branch length", 0, 10, round(min_len, 3));
   
-  hs4.update();
-  hs4.display();
-  fill(255, 255, 255);
-  textSize(20);
-  text("Branch angle", 500, 345);
-  textSize(15);
-  text("0", 500, 362.5);
-  text(round(TWO_PI, 3), 692.5, 362.5);
-  text(round(hs4.normalPos * TWO_PI, 3), 500, 395);
   angle = hs4.normalPos * TWO_PI;
+  TextHScrollbar(hs4, "Branch angle", 0, round(TWO_PI, 3), round(angle, 3));
   
   //Drawing the tree
   stroke(255, 255, 255);
